@@ -13,7 +13,18 @@ The program is run with the following command:
 
 	
 Sample command to run program:
-	> ./deadlock allocation.txt request.txt "0 1 0 2 1"
+	
+```
+#!c
+
+> ./deadlock allocation.txt request.txt "0 1 0 2 1"
+```
+
 
 The program can also be run by typing
-	> make run
+	
+```
+#!c
+
+> make run
+```
