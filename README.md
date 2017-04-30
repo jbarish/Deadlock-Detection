@@ -17,7 +17,7 @@ Sample command to run program:
 ```
 #!c
 
-> ./deadlock allocation.txt request.txt "0 1 0 2 1"
+       > ./deadlock allocation.txt request.txt "0 1 0 2 1"
 ```
 
 
@@ -26,5 +26,5 @@ The program can also be run by typing
 ```
 #!c
 
-> make run
+       > make run
 ```
