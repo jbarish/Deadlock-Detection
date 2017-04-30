@@ -8,7 +8,7 @@ The program is run with the following command:
 ```
 #!c
 
-	> ./deadlock allocation_matrix_file request_matrix_file "Space_separated_Available_Vector"
+       > ./deadlock allocation_matrix_file request_matrix_file "Space_separated_Available_Vector"
 ```
 
 	
