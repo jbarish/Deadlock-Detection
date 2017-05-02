@@ -38,3 +38,6 @@ re: fclean all
 
 run:
 	./deadlock allocation.txt request.txt "0 1 0 2 1"
+	./deadlock allocation.txt request.txt "1 1 0 2 1"
+	./deadlock allocation.txt request.txt "0 2 1 2 1"
+

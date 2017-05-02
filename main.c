@@ -6,11 +6,17 @@ int ** allocation;
 int** request;
 int procs;
 int resources;
+int* finOrder;
+int* inOrder;
 
 struct stringArray {
 	int* ints;
 	int n;
 }; typedef struct stringArray* StringsInfo;
+
+
+int compare(int* allocation, int* request, int s);
+void append(int* a, int* b, int s);
 
 /*
  * Given a string, count the number of times a given character appears
@@ -80,12 +86,77 @@ int** readMat(char* fName){
 	
 }
 
-void detection();
+int detection(StringsInfo start){
+	int found = 0;
+	for(int i = 0 ; i< procs; i++){
+		for(int j = 0; j< procs; j++){
+			if(finOrder[j] == -1 && compare(start->ints, request[j], resources)){
+				append(start->ints, allocation[j], resources);
+				finOrder[j] = i;
+				inOrder[i] =j;
+				found = 1;
+				break;
+			}
+		}
+		if(!found){
+			return 0;	
+		}else {
+			found = 0;
+		}
+	}
+	return 1;
+}
+
+int compare(int* allocation, int* request, int s){
+	for(int i = 0; i< s; i++){
+		if(allocation[i] < request[i]){
+			return 0;
+		}
+	}
+	return 1;
+}
+
+void append(int* a, int* b, int s){
+	for(int i = 0; i< s; i++){
+		a[i]+= b[i];
+	}
+}
 
 int main(int argc, char* argv[] ){
 	
 	allocation = readMat(argv[1]);
 	request= readMat(argv[2]);
 	StringsInfo start = splitString(argv[3]);
+	finOrder = malloc(sizeof(int)*procs);
+	if(resources != start->n){
+		printf("Improper starting vector. Must have %i elements\n", resources);
+		exit(1);
+	}
+	for(int i = 0; i<procs; i++){
+		finOrder[i] =-1;
+	}
+	
+	inOrder = malloc(sizeof(int)*procs);
+	for(int i = 0; i<procs; i++){
+		inOrder[i] =-1;
+	}
+	
+	if(detection(start)){
+		printf("No deadlock! Order processes ran:\n");
+		for(int i = 0; i< procs; i++){
+			printf("\tProccess %i\n", inOrder[i] );
+		}
+	}else{
+		printf("Deadlock with procs: \n");
+		for(int i = 0; i< procs; i++){
+			if(finOrder[i]==-1){
+				printf("\tProccess %i\n",i );
+			}
+		}
+	}
+	free(request);
+	free(allocation);
+	free(finOrder);
+	free(inOrder);
 	return 0;
 }
