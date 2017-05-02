@@ -1,7 +1,11 @@
-This program will figure out if there is a deadlock, given:
-	A Request Matrix
-	An Allocation Matrix
-	An Available Vector
+This program will figure out if there is a deadlock, given:  
+	A Request Matrix   
+	An Allocation Matrix   
+	An Available Vector   
+	
+If there is a deadlock, it will try to resolve the deadlock using preemption.  
+  
+  
 	
 The program is run with the following command:
 
