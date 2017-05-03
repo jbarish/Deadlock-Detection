@@ -25,7 +25,7 @@ Sample command to run program:
 ```
 
 
-The program can also be run by typing
+The program can also be run by typing. This has numerous built in tests that showcase the programs features   
 	
 ```
 #!c

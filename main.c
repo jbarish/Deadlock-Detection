@@ -57,6 +57,7 @@ StringsInfo splitString(char* fullName){
 	StringsInfo si = malloc(sizeof(struct stringArray));
 	si->n = numNames;
 	si->ints = names;
+	free(tempName);
 	return si;
 }
 
@@ -83,6 +84,7 @@ int** readMat(char* fName){
 			mat[numProcs] = si->ints;
 			numProcs++;
 			resources = si->n;
+			free(si);
 			mat = (int**)realloc(mat, sizeof(int*)*(numProcs+1)); /*reallocate length of matrix*/
 		}
 	}
@@ -129,8 +131,8 @@ int detection(StringsInfo start, int n){
 int recover(StringsInfo start){
 	
 	/*figure out where we left off to see what procs are deadlocked */
-	int max = 0;
-	for(int i = 0 ; i< start->n; i++){
+	int max = -1;
+	for(int i = 0 ; i< procs; i++){
 		if(finOrder[i] > max){
 			max = finOrder[i];
 		}
@@ -155,7 +157,7 @@ int recover(StringsInfo start){
 						/*if we can, we are done*/
 						printf("\t\tDeadlock Resolved! Order processes finished:\n");
 						for(int index = max; index< procs && inOrder[index] != -1; index++){
-							printf("\t\tProccess %i\n", inOrder[i] );
+							printf("\t\tProccess %i\n", inOrder[index] );
 						}
 						return 1;
 					}else{
@@ -173,7 +175,7 @@ int recover(StringsInfo start){
 						}
 					
 						/*figure out how far we got in fixing it up */
-						for(int l = max-1 ; l< start->n; l++){
+						for(int l = max-1 ; l< procs; l++){
 							if(finOrder[l] > max){
 								max = finOrder[l];
 							}
@@ -270,6 +272,13 @@ int main(int argc, char* argv[] ){
 		}
 		
 	}
+	
+	for(int i = 0; i< procs; i++){
+		free(allocation[i]);
+		free(request[i]);
+	}
+	free(start->ints);
+	free(start);
 	free(request);
 	free(allocation);
 	free(finOrder);
