@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+/*
+ * Justin Barish
+ * Jack Kraszewski
+ *
+ * We pledge our honor that we have abided by the Stevens Honor System 
+ */
+
+
 
 int ** allocation; /*allocation matrix, read in from file */
 int** request; /*request matrix, read in from file */
